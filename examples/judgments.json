@@ -1,0 +1,28 @@
+{
+  "state": {
+    "build": "passed",
+    "unit_tests": "passed",
+    "integration_tests": "not run",
+    "impact": "Production checkout is unavailable for all customers."
+  },
+  "questions": {
+    "claim_support": {
+      "type": "choice",
+      "instructions": "Does the state establish that all test suites passed?",
+      "criteria": {
+        "supported": "Every test suite is confirmed passing",
+        "contradicted": "A test suite is confirmed failing",
+        "insufficient": "At least one test suite has no result"
+      }
+    },
+    "build_passed": {
+      "type": "noul",
+      "instructions": "Did the build pass?"
+    },
+    "severity": {
+      "type": "score",
+      "instructions": "Rate the customer impact described in impact.",
+      "criteria": ["No customer impact", "Some users inconvenienced", "Checkout blocked for all customers"]
+    }
+  }
+}
