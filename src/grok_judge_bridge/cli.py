@@ -21,6 +21,9 @@ def main() -> int:
     sub.add_parser("status")
     sub.add_parser("pending")
     sub.add_parser("reconcile")
+    serve = sub.add_parser("serve")
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", type=int, default=8018)
     configure = sub.add_parser("configure")
     configure.add_argument("--bot-id", required=True)
     configure.add_argument("--mcp-command-json", required=True)
@@ -38,6 +41,11 @@ def main() -> int:
             from .server import mcp
 
             mcp.run(transport="stdio")
+            return 0
+        if args.command == "serve":
+            from .http import serve
+
+            serve(host=args.host, port=args.port)
             return 0
         if args.command == "configure":
             values = {

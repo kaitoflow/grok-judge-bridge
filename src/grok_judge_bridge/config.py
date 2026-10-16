@@ -12,6 +12,11 @@ from pydantic import BaseModel, ConfigDict, Field
 class BridgeError(Exception):
     """A safe error that never contains upstream messages or request contents."""
 
+    def __init__(self, message: str, *, code: str = "judgment_failed", status_code: int = 502):
+        super().__init__(message)
+        self.code = code
+        self.status_code = status_code
+
 
 class Settings(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "grok-judge-bridge"
-version = "0.1.0"
+version = "0.2.0"
 description = "TypeSafe-shaped judgments through a dedicated Grok Bot, with MCP, CLI and Python interfaces."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -12,9 +12,13 @@ license = "MIT"
 authors = [{name = "kaitoflow"}]
 dependencies = [
   "system-one-adapter>=0.2.1,<0.3",
+  "typesafe-sdk>=0.7.5,<0.8",
   "mcp>=1.20,<2",
   "filelock>=3.20,<4",
   "jsonschema>=4.23,<5",
+  "starlette>=0.49,<2",
+  "uvicorn>=0.35,<1",
+  "zstandard>=0.23,<1",
 ]
 
 [project.optional-dependencies]

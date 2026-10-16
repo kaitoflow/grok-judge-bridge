@@ -151,7 +151,9 @@ class BotTransport:
                 async with self.exclusive():
                     if self.pending() is not None:
                         raise BridgeError(
-                            "This Bot has a pending task. Run grok-judge reconcile before another batch."
+                            "This Bot has a pending task. Run grok-judge reconcile before another batch.",
+                            code="pending_task",
+                            status_code=409,
                         )
                     async with self.connect(self.settings) as session:
                         before = decode_tool_result(
@@ -192,7 +194,9 @@ class BotTransport:
             raise
         except TimeoutError:
             raise BridgeError(
-                "Grok Bot timed out. This batch is unprocessed; inspect pending and reconcile."
+                "Grok Bot timed out. This batch is unprocessed; inspect pending and reconcile.",
+                code="judgment_timeout",
+                status_code=504,
             ) from None
         except Exception:
             raise BridgeError(

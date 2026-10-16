@@ -47,10 +47,12 @@ class AsyncGrokBotProvider:
 
     def __init__(self, settings: Settings | None = None, *, transport: BotTransport | None = None):
         self.transport = transport or BotTransport(settings or load_settings())
+        self.last_error: BridgeError | None = None
 
     async def request(
         self, messages: list[Message], *, schema: dict, structured: bool
     ) -> ProviderResult:
+        self.last_error = None
         # Grok Bot has prompted JSON, not a native constrained-output transport.
         if structured:
             raise BridgeError("Use structured_outputs=False for Grok Bot.")
@@ -76,6 +78,8 @@ class AsyncGrokBotProvider:
         )
 
     def translate_error(self, error: Exception) -> TypeSafeError:
+        if isinstance(error, BridgeError):
+            self.last_error = error
         return TypeSafeError("Grok Bot judgment failed; batch is unprocessed.")
 
 
